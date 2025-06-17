@@ -1,0 +1,101 @@
+muleBase: asintmuleacreuwprod.azurecr.io/ris-mule-base-395:1.0.6
+
+replicaCount: 1
+
+resources:
+  requests:
+    memory: 1024M
+    cpu: 500m
+  limits:
+    memory: 2048M
+configuration:
+  env:
+    # --------------------------------------------------------------------------------------------------
+    # Interface Parameters
+    # ---------------------------------------------------------------------------------------------------
+    interfaceID: "bam020"
+    interfaceName: "itemlocation"
+    intr.env: "dev"
+    flowID: "BAM020m"
+    application.flow.id: "BAM020m"
+    sourceSystemName: "Oracle RMS"
+    targetSystemName1: "DataLake BAM"
+    targetSystemName2: "DTHUB"
+    targetSystemName3: "EPF"
+    bodyEncoding: "UTF8"
+    messageFamily: "WAC"
+    partitionKey: "${messageFamily}_${application.flow.id}"
+    # -----------------------------------------------------------------------------------------------
+    # Source System Parameters (AQ JMS, FTP/SFTP, HTTP, Database, Azure Service Bus, Amazon S3 etc..)
+    # -------------------------------------------------------------------------------------------------
+    sftp.fileExtension: "*.gz"
+    sftp.ris.host: "localhost"
+    sftp.ris.port: "22"
+    sftp.ris.username: "tester"
+    sftp.ris.password: "password"
+    sftp.ris.endpoint: "${sftp.ris.host}:${sftp.ris.port}"
+    sftp.ris.path.bam020m: "/home/ftpuser02/bam020m"
+    sftp.test.path.test: "/home/ftpuser02/test123"
+
+    # --------------------------------------------------------------------------------------------------
+    # Target System Parameters   (AQ JMS, FTP/SFTP, HTTP, Database, Azure Service Bus, Amazon S3 etc..)
+    # ---------------------------------------------------------------------------------------------------
+    azure.service.bus.wacats.topic: "ItemLocationWacFromRBPLSV"
+    azure.service.bus.dthub.topic: "systemtests-bam020m"
+    azure.service.bus.dthub.subscription: "itemlocationfromrbplsvtodlbamepf-receiver"
+    azure.service.bus.dlbam.topic: "systemtests-bam020m"
+    azure.service.bus.dlbam.subscription: "itemlocationfromrbplsv-receiver"
+    azure.service.bus.api.topic: "systemtests-bam020m"
+    azure.service.bus.api.subscription: "itemlocationwacapifromrbplsv-receiver"
+    azure.service.bus.api.error.queue: "bam020-itemlocation-sb-s3-wac-api-errors"
+    azure.service.bus.dthub.error.queue: "bam020-itemlocation-sb-s3-wac-dthub-errors"
+    azure.service.bus.dlbam.error.queue: "bam020-itemlocation-sb-s3-wac-dlbam-errors"
+    azure.service.bus.systemtest.topic: "systemtest-framework"
+    azure.service.bus.systemtest.subscription: "systemtest-framework-receiver"
+    azure.service.bus.ris.connection.string: "Endpoint=sb://asbamintbus01eundev.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=N6q8Dn3DHi94ZnzqdwXlITRbAnvyEln8TizoXf93bmg="
+    azure.service.bus.wtsotest.topic: "wtsofeed"
+    azure.service.bus.wtsotest.subscription: "wtso_feed"
+    azure.service.bus.ciris.connection.string: "Endpoint=sb://asbamintbuseunci01.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=NdknaK6acxP6GWcMApYqY+c2WP0LqJtpl+ASbLL1saA="
+    azure.service.bus.wtsoenrichtest.topic: "wtso-enriched-data-feed-topic"
+    azure.service.bus.wtsoenrichtest.subscription: "wtso_enriched_data_feed_sub"
+
+    oracle.aq.jms.url: "jdbc:oracle:thin:@10.97.99.77:1531:CIRIB"
+    oracle.aq.jms.username: "MULESOFT"
+    oracle.aq.jms.password: "phlmIfBv45LFBZL0BC"
+    oracle.aq.jms.topic.name: "RIBAQ.ETITEMSFROMRMS"
+
+
+    # --------------------------------------------------------------------------------------------------
+    # Intermediate topics (AQ JMS, FTP/SFTP, HTTP, Database, Azure Service Bus, Amazon S3 etc..)
+    # ---------------------------------------------------------------------------------------------------
+    azure.service.bus.stage3.splitter.topic: "itemlocationstage3wacsplittertopic"
+    azure.service.bus.stage3.api.sub: "itemlocationstage3wacapi"
+    azure.service.bus.stage3.dlbam.sub: "itemlocationstage3wacdlbam"
+    azure.service.bus.stage3.dthub.sub: "itemlocationstage3wacdthub"
+
+    # --------------------------------------------------------------------------------------------------
+    # Azure Cosmos DB (Exported Resource Model)
+    # ---------------------------------------------------------------------------------------------------
+    azure.docdb.dev-server.baseproductlocation.database.name: "baseproductlocation"
+    azure.docdb.dev-server.baseproductlocation.published.collection.name: "publishedWac"
+    azure.docdb.dev-server.baseproductlocation.exported.collection.name: "exportedItemLocation"
+    azure.docdb.dev-server.included.uri: "mongodb://asbamcosdbeundev01:yTjnJe2BwLmc9wVhgHc1tFxOWOwO122K9nGw0wozKPyZrTpGAVCYSK4vM5gK6E0zPZ41fXQPw8wtAToAf2RPJw==@asbamcosdbeundev01.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@asbamcosdbeundev01@"
+
+
+    azure.docdb.item-ci-server.baseproductlocation.database.name: "baseproductlocation"
+    azure.docdb.item-ci-server.baseproductlocation.published.collection.name: "publishedWac"
+    azure.docdb.item-ci-server.baseproductlocation.exported.collection.name: "exportedItemLocation"
+    azure.docdb.item-ci-server.included.uri:
+
+    azure.docdb.database.baseproductlocation: "baseproductlocation"
+
+    azure.storage.queue.ris.connection.string: "DefaultEndpointsProtocol=https;AccountName=asbamintstg01eundev;AccountKey=WrZp2KOXH1N2whx0hzNd+BZwz+zvrLlA49TbbZap7wVX2QmmUm5kLINT3y2wvGnT4lOoIn1Kqr0ikKEzZE2WSw==;EndpointSuffix=core.windows.net"
+    azure.storage.queue.ris.systemtest.queue.name: "system-test-framework-ris-storage-queue-1"
+
+    azure.storage.queue.sit.connection.string:
+    azure.storage.queue.sit.systemtest.queue.name: "system-test-framework-sit-storage-queue-1"
+
+    azure.storage.blob.ris.container.name.bam020m: "bam020mtest"
+    azure.storage.blob.ris.container.name.bam020: "bam020-itemlocation-devtest"
+    azure.storage.blob.sit.container.name.ingestsystem: "ingestionfarm-systemtest"
+    azure.storage.blob.sit.container.name.ingestbam020m: "ingestionfarm-bam020m-test"

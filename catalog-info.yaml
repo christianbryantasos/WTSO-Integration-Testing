@@ -1,0 +1,33 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: system-test-framework
+  title: System Test Framework
+  description: System Test Framework
+  annotations:
+    asos.com/business-criticality: Business Supporting
+spec:
+  owner: IPT
+  lifecycle: development
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: system-test-framework-package
+  title: System Test Framework Package
+  description: Repository containing system test package that can be referenced inside the pom.xml of other repositories to run system tests against desired interfaces.
+  tags:
+    - testing
+  links:
+    - url: https://asoscom.atlassian.net/wiki/spaces/AIC/pages/4996104677/System+Testing+Framework
+      title: Confluence - System Test Framework Documentation
+      icon: description
+  annotations:
+    asos.com/business-criticality: Business Supporting
+    backstage.io/source-location: url:https://github.com/asosteam/asos-commercial-system-test-framework
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  lifecycle: development
+  owner: ipt
+  system: system-test-framework

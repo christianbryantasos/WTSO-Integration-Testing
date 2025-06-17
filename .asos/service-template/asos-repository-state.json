@@ -1,0 +1,14 @@
+{
+  "Name": "asos-repository",
+  "Instances": [
+    {
+      "Version": "1.0.223",
+      "InitialVersion": "1.0.223",
+      "AppliedUpgrades": [],
+      "Options": {
+        "name": "asos-commercial-system-test-framework",
+        "team": "ipt"
+      }
+    }
+  ]
+}

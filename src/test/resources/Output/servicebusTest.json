@@ -1,0 +1,23 @@
+{
+  "Id": "9bbfa241-5549-4ae2-911c-b2e1a588d03e",
+  "Topic": "Ingestion Farm Blob Created Event",
+  "Subject": "https://ascieuncisingestfarmsa.blob.core.windows.net/ingestionfarm-systemtest/2025/03/14/home/mule/nb_saexpdw_20180808_20180808154631.tar.gz",
+  "Data": {
+    "Api": "PutBlob",
+    "ClientRequestId": "397180",
+    "RequestId": null,
+    "ETag": "\"0x8DD63003C3218DF\"",
+    "ContentType": null,
+    "ContentLength": null,
+    "ContentOffset": null,
+    "BlobType": "BlockBlob",
+    "Url": "https://ascieuncisingestfarmsa.blob.core.windows.net/ingestionfarm-systemtest/2025/03/14/home/mule/nb_saexpdw_20180808_20180808154631.tar.gz",
+    "Sequencer": null,
+    "Identity": null,
+    "StorageDiagnostics": null
+  },
+  "EventType": "Microsoft.Storage.BlobCreated",
+  "EventTime": "2025-03-20T13:58:01.8571358Z",
+  "MetadataVersion": null,
+  "DataVersion": "1"
+}

@@ -1,0 +1,5 @@
+site_name: System Test Framework
+repo_url: https://github.com/asosteam/asos-commercial-system-test-framework
+edit_uri: ./edit/main/docs
+plugins:
+  - techdocs-core

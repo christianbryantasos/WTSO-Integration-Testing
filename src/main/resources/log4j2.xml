@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration packages="com.microsoft.applicationinsights.log4j.v2">
+
+    <Appenders>
+        <ApplicationInsightsAppender name="aiAppender" />
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p %d [%t] %c: %m%n" />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- Http Logger shows wire traffic on DEBUG -->
+        <AsyncLogger name="org.mule.service.http.impl.service.HttpMessageLogger" level="INFO"/>
+        <AsyncLogger name="org.mule.service.http" level="WARN"/>
+        <AsyncLogger name="org.mule.extension.http" level="ERROR"/>
+        <AsyncLogger name="org.mongodb.driver" level="ERROR"/>
+
+        <!-- Mule logger -->
+        <AsyncLogger name="org.mule.runtime.core.internal.processor.LoggerMessageProcessor" level="INFO"/>
+		<AsyncLogger name="com.microsoft.azure.servicebus.primitives" level="ERROR"/>
+        
+        <!-- Reduce startup noise -->
+        <AsyncLogger name="org.springframework.beans.factory" level="WARN" />
+
+		<AsyncRoot level="INFO">
+            <AppenderRef ref="aiAppender" />
+            <AppenderRef ref="Console" />
+        </AsyncRoot>
+    </Loggers>
+
+</Configuration>

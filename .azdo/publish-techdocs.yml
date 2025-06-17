@@ -1,0 +1,28 @@
+pr: none
+
+trigger:
+  paths:
+    include:
+      - mkdocs.yml
+      - docs/*
+      - .azdo/publish-techdocs.yml
+
+variables:
+  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+    backstageEnvironment: production
+  ${{ else }}:
+    backstageEnvironment: non-production
+
+resources:
+  repositories:
+    - repository: techdocs-pipeline
+      type: github
+      name: asosteam/asos-sre-backstage
+      endpoint: github-asosteam
+
+jobs:
+  - template: azurepipelines.tech-docs-template.yaml@techdocs-pipeline
+    parameters:
+      azureServiceConnection: AsosCommercialIntegrationNonProd
+      environment: ${{ variables.backstageEnvironment }}
+      backstageEntityName: system-test-framework-package
